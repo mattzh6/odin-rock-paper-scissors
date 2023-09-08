@@ -39,7 +39,15 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice(moves);
+// Create a game function that plays multiple rounds
+function game() {
+    
 
-console.log(playRound(playerSelection,computerSelection));
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = prompt("Please type a move (rock, paper, scissors)");
+        let computerSelection = getComputerChoice(moves);
+        console.log(playRound(playerSelection, computerSelection));
+    }
+}
+
+game();
