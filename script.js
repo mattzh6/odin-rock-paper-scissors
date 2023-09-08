@@ -1,7 +1,9 @@
+// Each key will contain a value of the move that defeats it
+
 const moves = {
-    R: "Rock",
-    P: "Paper",
-    S: "Scissors"
+    rock: "paper",
+    paper: "scissors",
+    scissors: "rock"
 }
 
 function getComputerChoice(moves) {
@@ -22,4 +24,22 @@ function getComputerChoice(moves) {
     return chosenMove;
 }
 
-console.log(getComputerChoice(moves));
+function playRound(playerSelection, computerSelection) {
+    playerSelection = playerSelection.toLowerCase();
+    computerSelection = computerSelection.toLowerCase();
+
+    if (moves[playerSelection] === computerSelection) {
+        return `You Lose! ${computerSelection} beats ${playerSelection}`;
+    }
+    else if (moves[computerSelection] === playerSelection) {
+        return `You Win! ${playerSelection} beats ${computerSelection}`;
+    }
+    else {
+        return "It's a Draw!";
+    }
+}
+
+const playerSelection = "rock";
+const computerSelection = getComputerChoice(moves);
+
+console.log(playRound(playerSelection,computerSelection));
