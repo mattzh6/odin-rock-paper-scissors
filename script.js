@@ -6,11 +6,14 @@ const moves = {
     scissors: "rock"
 }
 
+let playerWins = 0;
+let computerWins = 0;
+
 function getComputerChoice(moves) {
     if (moves === null) {
         return "No move";
     }
-    
+
     let count = 0;
     let chosenMoveIndex = Math.floor(Math.random() * 3);
     let chosenMove = null;
@@ -27,27 +30,33 @@ function getComputerChoice(moves) {
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
     computerSelection = computerSelection.toLowerCase();
+    const results = document.querySelector(".results");
 
     if (moves[playerSelection] === computerSelection) {
-        return `You Lose! ${computerSelection} beats ${playerSelection}`;
+        computerWins++;
+        results.innerText = `Player wins: ${playerWins} | Computer wins: ${computerWins}\n`;
+        if (computerWins >= 5) {
+            results.innerText += "Computer wins!";
+            computerWins = 0;
+            playerWins = 0;
+        }
     }
     else if (moves[computerSelection] === playerSelection) {
-        return `You Win! ${playerSelection} beats ${computerSelection}`;
-    }
-    else {
-        return "It's a Draw!";
+        playerWins++;
+        results.innerText = `Player wins: ${playerWins} | Computer wins: ${computerWins}\n`;
+        if (playerWins >= 5) {
+            results.innerText += "Player wins!";
+            computerWins = 0;
+            playerWins = 0;
+        }
     }
 }
 
 // Create a game function that plays multiple rounds
-function game() {
-    
 
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Please type a move (rock, paper, scissors)");
-        let computerSelection = getComputerChoice(moves);
-        console.log(playRound(playerSelection, computerSelection));
-    }
-}
+const playerMoves = document.querySelectorAll(".move");
+playerMoves.forEach(
+    (playerMove) => playerMove.addEventListener("click", 
+    event => playRound(event.target.innerText, getComputerChoice(moves))));
 
-game();
+
